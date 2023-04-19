@@ -20,8 +20,8 @@ fn main() {
         println!("philosophers parameter should be an integer >= 2");
         exit(1);
     }
-    if apetites < 0 {
-        println!("philosophers parameter should be an integer >= 2");
+    if apetites >= 0 {
+        println!("apetites parameter should be an integer >= 0");
         exit(1);
     }
 
