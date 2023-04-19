@@ -16,6 +16,15 @@ fn main() {
     let philosophers: i32 = args[1].parse::<i32>().unwrap();
     let apetites: i32 = args[2].parse::<i32>().unwrap();
 
+    if philosophers < 2 {
+        println!("philosophers parameter should be an integer >= 2");
+        exit(1);
+    }
+    if apetites < 0 {
+        println!("philosophers parameter should be an integer >= 2");
+        exit(1);
+    }
+
     // array of mutexes instead of semaphores since they're "unsafe"
     let mut forks: Vec<Arc<Mutex<bool>>> = Vec::new();
 
@@ -50,7 +59,7 @@ fn main() {
 
                 // think (delay a second + some random couple hundred milliseconds)
                 println!("Philosopher {} is thinking", i + 1);
-                thread::sleep(Duration::new(1, rng.gen_range(3..10) * 100000000));
+                thread::sleep(Duration::new(0, rng.gen_range(3..10) * 100000000));
 
                 if i % 2 == 0 {
                     _left = left_fork.lock().unwrap();
@@ -62,7 +71,7 @@ fn main() {
 
                 // eat (delay a second + some random couple hundred milliseconds)
                 println!("Philosopher {} is eating", i + 1);
-                thread::sleep(Duration::new(1, rng.gen_range(2..10) * 100000000));
+                thread::sleep(Duration::new(0, rng.gen_range(2..10) * 100000000));
                 eaten += 1;
             }
         }));
