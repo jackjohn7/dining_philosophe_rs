@@ -1,9 +1,9 @@
+use rand::Rng;
 use std::env;
 use std::process::exit;
 use std::sync::{Arc, Mutex, MutexGuard};
 use std::thread;
 use std::time::Duration;
-use rand::Rng;
 
 fn main() {
     // collect the arguments
@@ -37,14 +37,16 @@ fn main() {
 
     for i in 0..(philosophers) {
         // create threads for each of the philosophers
-        let left_fork = Arc::clone(&forks[{
-            let mut result = i -1;
-            if result == -1 {
-                result = philosophers - 1;
-            }
-            // return result in the form of usize to index the array
-            result as usize
-        }]);
+        let left_fork = Arc::clone(
+            &forks[{
+                let mut result = i - 1;
+                if result == -1 {
+                    result = philosophers - 1;
+                }
+                // return result in the form of usize to index the array
+                result as usize
+            }],
+        );
         let right_fork = Arc::clone(&forks[i as usize]);
         threads.push(thread::spawn(move || {
             let mut rng = rand::thread_rng();
